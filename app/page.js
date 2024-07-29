@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import styles from './page.module.css'
+import { APP_VERSION } from '../version'
 
 export default function Home() {
     return (
