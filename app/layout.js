@@ -1,6 +1,7 @@
 import './globals.css'
 import { Inter } from 'next/font/google'
 import { AuthProvider } from '../components/AuthProvider'
+import VersionCheck from '../components/VersionCheck'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -14,9 +15,14 @@ export default function RootLayout({ children }) {
         <html lang="en">
             <head>
                 <link rel="manifest" href="/manifest.json" />
+                <meta name="theme-color" content="#000000" />
+                <link rel="apple-touch-icon" href="/icon-192x192.png" />
             </head>
             <body className={inter.className}>
-                <AuthProvider>{children}</AuthProvider>
+                <AuthProvider>
+                    <VersionCheck />
+                    {children}
+                </AuthProvider>
             </body>
         </html>
     )
