@@ -27,11 +27,7 @@ export const authOptions = {
 
                 let isPasswordCorrect;
                 try {
-                    console.log('Attempting password comparison');
-                    console.log('Input password:', credentials.password);
-                    console.log('Stored hash:', user[0].Password);
                     isPasswordCorrect = await compare(credentials.password, user[0].Password)
-                    console.log('Is password correct?', isPasswordCorrect);
                 } catch (error) {
                     console.error('Error during password comparison:', error);
                     return null;
@@ -39,7 +35,6 @@ export const authOptions = {
 
 
                 if (!isPasswordCorrect) {
-                    console.log('Password is incorrect');
                     return null
                 }
 

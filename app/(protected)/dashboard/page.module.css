@@ -1,0 +1,56 @@
+.dashImage {
+    width: 20vw;
+    max-width: 180px;
+    min-width: 100px;
+    height: auto;
+}
+
+.cardTitle {
+    font-size: .75em;
+    background-color: var(--dark-blue);
+    color: var(--background-white);
+    width: 100%;
+    text-align: center;
+    padding: .5em .5em;
+    white-space: nowrap;
+}
+
+.leftBox {
+    flex-grow: 1;
+    flex-basis: 0;
+}
+
+.rightBox {
+    flex-grow: 1;
+    flex-basis: 0;
+    text-align: right;
+}
+
+
+
+.buttonCardContainer {
+    display: flex;
+    flex-flow: row wrap;
+    gap: 1.5em;
+}
+
+.buttonCard {
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 10px;
+    overflow: clip;
+    box-shadow: 0px 5px 5px var(--light-blue);
+}
+
+@media screen and (max-width: 600px) {
+    .buttonCardContainer {
+        flex-flow: column nowrap;
+    }
+
+    .dashImage {
+        width: 150px;
+    }
+
+}

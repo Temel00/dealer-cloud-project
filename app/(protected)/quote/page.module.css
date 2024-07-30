@@ -1,0 +1,57 @@
+.inputBody {
+    display: flex;
+    flex-flow: row nowrap;
+    width: 100%;
+}
+
+.sectionContainer {
+    flex-grow: 1;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.sectionContainer section {
+    background-color: var(--background-white);
+    padding: 1em;
+    border-radius: 1em;
+}
+
+.sidebar {
+    display: flex;
+    flex-flow: column nowrap;
+    background-color: var(--background-white);
+    border-radius: 0 1em 1em 0;
+    padding: 1em 0;
+}
+
+.sidebar button {
+    background: none;
+    font-size: 1em;
+    padding: 1em;
+    border: none;
+    cursor: pointer;
+    border-radius: 0 1em 1em 0;
+    transition: background-color .5s ease;
+}
+
+.sidebar button:hover {
+    background: var(--light-blue);
+}
+
+.leftBox {
+    flex-grow: 1;
+    flex-basis: 0;
+}
+
+.rightBox {
+    flex-grow: 1;
+    flex-basis: 0;
+    text-align: right;
+}
+
+.textInput {
+    background: none;
+    border: 1px solid var(--dark-blue);
+    line-height: 1.5em;
+}

@@ -10,6 +10,9 @@ export default function VersionCheck() {
         async function checkForUpdates() {
             try {
                 const res = await fetch('/api/version');
+                if (!res.ok) {
+                    throw new Error(`HTTP error! status: ${res.status}`);
+                }
                 const { version } = await res.json();
                 if (version !== APP_VERSION) {
                     setUpdateAvailable(true);

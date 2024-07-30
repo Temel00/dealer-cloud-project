@@ -8,6 +8,11 @@
     --foreground-rgb: 0, 0, 0;
     --background-start-rgb: 214, 219, 220;
     --background-end-rgb: 255, 255, 255;
+    --black: #141414;
+    --dark-blue: #103494;
+    --light-blue: #A3B9F5;
+    --orange: #F94C08;
+    --background-white: #F5F5F5;
 }
 
 * {
@@ -34,10 +39,112 @@ a {
     text-decoration: none;
 }
 
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: var(--dark-blue);
+}
+
+header {
+    position: absolute;
+    width: 100%;
+    border-radius: 0 0 1em 1em;
+    top: 0;
+    display: flex;
+    background-color: var(--background-white);
+    justify-content: space-between;
+    align-items: center;
+    padding: 1em 2em;
+    color: var(--dark-blue);
+}
+
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 4rem 2rem;
+    border-radius: 1em;
+    min-width: 200px;
+    background-color: var(--background-white);
+    color: var(--black);
+}
+
+.title {
+    font-size: 2vw;
+    color: var(--black);
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.buttonContainer {
+    display: flex;
+    gap: 1rem;
+}
+
+.textInput {
+    display: flex;
+    justify-content: right;
+    color: var(--black);
+    gap: 1em;
+    margin: 1em 0;
+}
+
+.textInput input {
+    background: none;
+    border: 1px solid var(--black);
+    border-radius: 5px;
+    line-height: 1.5em;
+    padding: 0 .5em;
+}
+
+.textInput input:focus {
+    outline: 1px solid var(--orange);
+}
+
+.backButton {
+    color: var(--dark-blue);
+    position: absolute;
+    top: 1em;
+    left: 1em;
+}
+
+.button {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    color: var(--background-white);
+    background-color: var(--dark-blue);
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.button:hover {
+    background-color: var(--light-blue);
+}
+
+.image {
+    width: 50vw;
+    max-width: 280px;
+    min-width: 200px;
+    height: auto;
+}
+
 @media (prefers-color-scheme: dark) {
     :root {
         --foreground-rgb: 255, 255, 255;
         --background-start-rgb: 0, 0, 0;
         --background-end-rgb: 0, 0, 0;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .title {
+        font-size: 1.25em;
     }
 }

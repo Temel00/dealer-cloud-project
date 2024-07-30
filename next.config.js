@@ -8,6 +8,14 @@ const nextConfig = {
     env: {
         APP_VERSION: process.env.npm_package_version,
     },
+    async rewrites() {
+        return [
+            {
+                source: '/api/:path*',
+                destination: '/api/:path*',
+            },
+        ]
+    },
 }
 
 module.exports = withPWA(nextConfig)
