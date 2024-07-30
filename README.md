@@ -6,3 +6,5 @@
 npm install next react react-dom express jsonwebtoken bcryptjs dotenv
 
 npm install --save-dev nodemon concurrently electron electron-builder
+
+npm install -save @fortawesome/fontawesome-free @fortawesome/fontawesome-svg-core
