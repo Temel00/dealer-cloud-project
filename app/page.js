@@ -19,6 +19,7 @@ export default function Home() {
                     <Link href="/register" className="button">Register</Link>
                 </div>
             </section>
+            <p>version: {APP_VERSION}</p>
         </main>
     )
 }

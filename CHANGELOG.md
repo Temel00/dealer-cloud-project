@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ###### Goal of change is to add additional protected routes and complete build of initial page structure that matches PBS Quote Generator
 
 ### Added
- 
+  - Added a Quote Input page with sidebar nav and corrected some of the styling on dashboard and login pages
 ### Changed
  
 ### Fixed
