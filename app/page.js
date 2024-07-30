@@ -1,5 +1,6 @@
 import Link from 'next/link'
 // import styles from './page.module.css'
+import { APP_VERSION } from '../version'
 import Image from 'next/image'
 import logo from '../public/images/pbslogo.png'
 
