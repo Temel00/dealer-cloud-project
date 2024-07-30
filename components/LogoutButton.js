@@ -1,6 +1,9 @@
 'use client'
 import { signOut } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faDoorOpen } from '@fortawesome/free-solid-svg-icons'
+import styles from './LogoutButton.module.css';
 
 export default function LogoutButton() {
     const router = useRouter()
@@ -10,5 +13,9 @@ export default function LogoutButton() {
         router.push('/login')
     }
 
-    return <button onClick={handleLogout}>Logout</button>
+    return (
+        <div className={styles.leftBox}>
+            <button onClick={handleLogout}><FontAwesomeIcon icon={faDoorOpen} size="2x" /></button>
+        </div>
+    )
 }

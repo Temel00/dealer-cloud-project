@@ -1,0 +1,11 @@
+.leftBox {    
+    flex-grow: 1;
+    flex-basis: 0;
+}
+
+.leftBox button{
+    background: none;
+    border: none;
+    color: var(--dark-blue);
+    cursor: pointer;
+}

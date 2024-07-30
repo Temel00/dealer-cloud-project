@@ -48,7 +48,7 @@ export default function Register() {
                 />
                 <h1 className="title">Register</h1>
                 {error && <p style={{ color: 'red' }}>{error}</p>}
-                <div class="container">
+                <div className="container">
                     <div className="textInput">
                         <label htmlFor="email">Email:</label>
                         <input

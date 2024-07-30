@@ -1,5 +1,5 @@
 import Link from 'next/link'
-// import styles from './page.module.css'
+import styles from './page.module.css'
 import { APP_VERSION } from '../version'
 import Image from 'next/image'
 import logo from '../public/images/pbslogo.png'
@@ -19,7 +19,7 @@ export default function Home() {
                     <Link href="/register" className="button">Register</Link>
                 </div>
             </section>
-            <p>version: {APP_VERSION}</p>
+            <p className={styles.version}>version: {APP_VERSION}</p>
         </main>
     )
 }

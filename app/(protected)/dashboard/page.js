@@ -12,6 +12,7 @@ import pbsWebsite from '../../../public/images/pbsWebsite.png'
 import atcHazard from '../../../public/images/HazardsATC.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faDoorOpen } from '@fortawesome/free-solid-svg-icons'
+import LogoutButton from '../../../components/LogoutButton';
 
 export default async function Dashboard() {
     const session = await getServerSession(authOptions)
@@ -23,7 +24,7 @@ export default async function Dashboard() {
     return (
         <main>
             <header>
-                <Link href="/" className={styles.leftBox}><FontAwesomeIcon icon={faDoorOpen} size="2x" /></Link>
+                <LogoutButton className={styles.leftBox}/>                
                 <h1>Dashboard</h1>
                 <p className={styles.rightBox}>Welcome, {session.user.email}</p>
             </header>
