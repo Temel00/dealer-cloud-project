@@ -15,7 +15,7 @@
     white-space: nowrap;
 }
 
-.leftBox {    
+.leftBox {
     flex-basis: 0;
     outline: 1px solid red;
 }
