@@ -39,6 +39,7 @@ export const initialState = {
     {
       name: '',
       address: '',
+      layout: '',
       // ... other building-specific fields
     }
   ]

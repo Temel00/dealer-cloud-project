@@ -2,7 +2,8 @@
     margin: 6em 0;
     display: flex;
     flex-flow: row nowrap;
-    width: 100%;
+    width: 100%;    
+    align-items: center;    
 }
 
 .sectionContainer {
@@ -28,7 +29,8 @@
     flex-flow: column nowrap;
     background-color: var(--background-white);
     border-radius: 0 1em 1em 0;
-    padding: 1em 0;
+    padding: 1em 0;    
+    
 }
 
 .sidebar button {
@@ -38,7 +40,7 @@
     border: none;
     cursor: pointer;
     border-radius: 0 1em 1em 0;
-    transition: background-color .5s ease;
+    transition: background-color .5s ease;    
 }
 
 .sidebar button:hover {
@@ -138,6 +140,10 @@
     border: 1px solid var(--dark-blue);
     line-height: 2em;
     border-radius: 5px;
+}
+
+.buildingContainer{
+    outline: 1px solid red;
 }
 
 @media screen and (min-width: 600px) {

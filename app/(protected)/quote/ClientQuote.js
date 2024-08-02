@@ -13,6 +13,7 @@ export default function ClientQuote({ session }) {
     const { values, handleChange, handleNestedChange, setValues } = useFormState(initialState);
     const [activeCard, setActiveCard] = useState('quote-info');
     const [isDesktop, setDesktop] = useState(false);
+    const [activeBuilding, setActiveBuilding] = useState(0);
     const [currentIndex, setCurrentIndex] = useState(0);
     const navItems = [
         { id: 'quote-info', label: 'Project Information' },
@@ -121,6 +122,7 @@ export default function ClientQuote({ session }) {
                 )}
                 <div className={styles.sectionContainer}>
                     <form onSubmit={handleSubmit}>
+                        {/* Project Info Page */}
                         {(activeCard == "quote-info") &&
                             <section id="projectInfo">
                                 <div className={styles.inputContainer}>
@@ -334,130 +336,232 @@ export default function ClientQuote({ session }) {
                                         id="buildingUse"
                                         name="buildingUse"
                                         className={styles.textInput}
-                                        value={values.projectCounty}
+                                        value={values.buildingUse}
                                         onChange={handleChange}
                                         placeholder="Building Use"
                                     />
-                                </div>
-                                <div className={styles.inputContainer}>
-                                    <label htmlFor='buildingUse' >Building Use:</label>
-                                    <input
-                                        type="text"
-                                        id="buildingUse"
-                                        name="buildingUse"
-                                        className={styles.textInput}
-                                        value={values.projectCounty}
-                                        onChange={handleChange}
-                                        placeholder="Building Use"
-                                    />
-                                </div>
-                                <div className={styles.inputContainer}>
-                                    <label htmlFor='buildingUse' >Building Use:</label>
-                                    <input
-                                        type="text"
-                                        id="buildingUse"
-                                        name="buildingUse"
-                                        className={styles.textInput}
-                                        value={values.projectCounty}
-                                        onChange={handleChange}
-                                        placeholder="Building Use"
-                                    />
-                                </div>
-                                <div className={styles.inputContainer}>
-                                    <label htmlFor='buildingUse' >Building Use:</label>
-                                    <input
-                                        type="text"
-                                        id="buildingUse"
-                                        name="buildingUse"
-                                        className={styles.textInput}
-                                        value={values.projectCounty}
-                                        onChange={handleChange}
-                                        placeholder="Building Use"
-                                    />
-                                </div>
-                                <div className={styles.inputContainer}>
-                                    <label htmlFor='buildingUse' >Building Use:</label>
-                                    <input
-                                        type="text"
-                                        id="buildingUse"
-                                        name="buildingUse"
-                                        className={styles.textInput}
-                                        value={values.projectCounty}
-                                        onChange={handleChange}
-                                        placeholder="Building Use"
-                                    />
-                                </div>
-                                <div className={styles.inputContainer}>
-                                    <label htmlFor='buildingUse' >Building Use:</label>
-                                    <input
-                                        type="text"
-                                        id="buildingUse"
-                                        name="buildingUse"
-                                        className={styles.textInput}
-                                        value={values.projectCounty}
-                                        onChange={handleChange}
-                                        placeholder="Building Use"
-                                    />
-                                </div>
-                                <div className={styles.inputContainer}>
-                                    <label htmlFor='buildingUse' >Building Use:</label>
-                                    <input
-                                        type="text"
-                                        id="buildingUse"
-                                        name="buildingUse"
-                                        className={styles.textInput}
-                                        value={values.projectCounty}
-                                        onChange={handleChange}
-                                        placeholder="Building Use"
-                                    />
-                                </div>
-                                <div className={styles.inputContainer}>
-                                    <label htmlFor='buildingUse' >Building Use:</label>
-                                    <input
-                                        type="text"
-                                        id="buildingUse"
-                                        name="buildingUse"
-                                        className={styles.textInput}
-                                        value={values.projectCounty}
-                                        onChange={handleChange}
-                                        placeholder="Building Use"
-                                    />
-                                </div>
-
+                                </div>                               
                                 <button onClick={() => console.log(values)}>TEST STATE</button>
-
-
-
-
                             </section>
                         }
+                        {/* Design Code Page */}
                         {(activeCard == "design-code") &&
                             <section>
-
+                                <div className={styles.inputContainer}>
+                                    <label htmlFor='buildingCode' >Building Code:</label>
+                                    <input
+                                        type="text"
+                                        id="buildingCode"
+                                        name="buildingCode"
+                                        className={styles.textInput}
+                                        value={values.buildingCode}
+                                        onChange={handleChange}
+                                        placeholder="Building Code"
+                                    />
+                                </div> 
+                                <div className={styles.inputContainer}>
+                                    <label htmlFor='riskCategory' >Risk Category:</label>
+                                    <input
+                                        type="text"
+                                        id="riskCategory"
+                                        name="riskCategory"
+                                        className={styles.textInput}
+                                        value={values.riskCategory}
+                                        onChange={handleChange}
+                                        placeholder="Risk Category"
+                                    />
+                                </div> 
+                                <div className={styles.inputContainer}>
+                                    <label htmlFor='collateralLoad' >Collateral Load:</label>
+                                    <input
+                                        type="text"
+                                        id="collateralLoad"
+                                        name="collateralLoad"
+                                        className={styles.textInput}
+                                        value={values.collateralLoad}
+                                        onChange={handleChange}
+                                        placeholder="Collateral Load"
+                                    />
+                                </div> 
+                                <div className={styles.inputContainer}>
+                                    <label htmlFor='liveLoad' >Live Load:</label>
+                                    <input
+                                        type="text"
+                                        id="liveLoad"
+                                        name="liveLoad"
+                                        className={styles.textInput}
+                                        value={values.liveLoad}
+                                        onChange={handleChange}
+                                        placeholder="Live Load"
+                                    />
+                                </div> 
+                                <div className={styles.inputContainer}>
+                                    <label htmlFor='deadLoad' >Dead Load:</label>
+                                    <input
+                                        type="text"
+                                        id="deadLoad"
+                                        name="deadLoad"
+                                        className={styles.textInput}
+                                        value={values.deadLoad}
+                                        onChange={handleChange}
+                                        placeholder="Dead Load"
+                                    />
+                                </div> 
+                                <div className={styles.inputContainer}>
+                                    <label htmlFor='windLoad' >Wind Load:</label>
+                                    <input
+                                        type="text"
+                                        id="windLoad"
+                                        name="windLoad"
+                                        className={styles.textInput}
+                                        value={values.windLoad}
+                                        onChange={handleChange}
+                                        placeholder="Wind Load"
+                                    />
+                                </div> 
+                                <div className={styles.inputContainer}>
+                                    <label htmlFor='exposure' >Exposure:</label>
+                                    <input
+                                        type="text"
+                                        id="exposure"
+                                        name="exposure"
+                                        className={styles.textInput}
+                                        value={values.exposure}
+                                        onChange={handleChange}
+                                        placeholder="Exposure"
+                                    />
+                                </div> 
+                                <div className={styles.inputContainer}>
+                                    <label htmlFor='enclosure' >Enclosure:</label>
+                                    <input
+                                        type="text"
+                                        id="enclosure"
+                                        name="enclosure"
+                                        className={styles.textInput}
+                                        value={values.enclosure}
+                                        onChange={handleChange}
+                                        placeholder="Enclosure"
+                                    />
+                                </div> 
+                                <div className={styles.inputContainer}>
+                                    <label htmlFor='groundLoad' >Ground Load:</label>
+                                    <input
+                                        type="text"
+                                        id="groundLoad"
+                                        name="groundLoad"
+                                        className={styles.textInput}
+                                        value={values.groundLoad}
+                                        onChange={handleChange}
+                                        placeholder="Ground Load"
+                                    />
+                                </div> 
+                                <div className={styles.inputContainer}>
+                                    <label htmlFor='roofLoad' >Roof Load:</label>
+                                    <input
+                                        type="text"
+                                        id="roofLoad"
+                                        name="roofLoad"
+                                        className={styles.textInput}
+                                        value={values.roofLoad}
+                                        onChange={handleChange}
+                                        placeholder="Roof Load"
+                                    />
+                                </div> 
+                                <div className={styles.inputContainer}>
+                                    <label htmlFor='thermalFactor' >Thermal Factor:</label>
+                                    <input
+                                        type="text"
+                                        id="thermalFactor"
+                                        name="thermalFactor"
+                                        className={styles.textInput}
+                                        value={values.thermalFactor}
+                                        onChange={handleChange}
+                                        placeholder="Thermal Factor"
+                                    />
+                                </div> 
+                                <div className={styles.inputContainer}>
+                                    <label htmlFor='seismicCategory' >Seismic Category:</label>
+                                    <input
+                                        type="text"
+                                        id="seismicCategory"
+                                        name="seismicCategory"
+                                        className={styles.textInput}
+                                        value={values.seismicCategory}
+                                        onChange={handleChange}
+                                        placeholder="Seismic Category"
+                                    />
+                                </div> 
+                                <div className={styles.inputContainer}>
+                                    <label htmlFor='seismicSs' >SeismicSs:</label>
+                                    <input
+                                        type="text"
+                                        id="seismicSs"
+                                        name="seismicSs"
+                                        className={styles.textInput}
+                                        value={values.seismicSs}
+                                        onChange={handleChange}
+                                        placeholder="SeismicSs"
+                                    />
+                                </div> 
+                                <div className={styles.inputContainer}>
+                                    <label htmlFor='seismicS1' >SeismicS1:</label>
+                                    <input
+                                        type="text"
+                                        id="seismicS1"
+                                        name="seismicS1"
+                                        className={styles.textInput}
+                                        value={values.seismicS1}
+                                        onChange={handleChange}
+                                        placeholder="SeismicS1"
+                                    />
+                                </div> 
+                                <div className={styles.inputContainer}>
+                                    <label htmlFor='seismicSms' >SeismicSms:</label>
+                                    <input
+                                        type="text"
+                                        id="seismicSms"
+                                        name="seismicSms"
+                                        className={styles.textInput}
+                                        value={values.seismicSms}
+                                        onChange={handleChange}
+                                        placeholder="SeismicSms"
+                                    />
+                                </div> 
+                                <div className={styles.inputContainer}>
+                                    <label htmlFor='seismicSm1' >SeismicSm1:</label>
+                                    <input
+                                        type="text"
+                                        id="seismicSm1"
+                                        name="seismicSm1"
+                                        className={styles.textInput}
+                                        value={values.seismicSm1}
+                                        onChange={handleChange}
+                                        placeholder="SeismicSm1"
+                                    />
+                                </div> 
                             </section>
                         }
                         {(activeCard == "building-project") &&
                             <section>
                                 {/* Buildings section */}
                                 {values.buildings.map((building, index) => (
-                                    <div key={index}>
-                                        {/* Example of an input using handleNestedChange */}
+                                    <div key={index} className={styles.buildingContainer}>                                        
                                         <input
                                             type="text"
                                             value={building.name}
                                             onChange={(e) => handleNestedChange(index, 'name', e.target.value)}
                                             placeholder="Building Name"
-                                        />
-
-                                        {/* Another example of handleNestedChange */}
+                                        />                                        
                                         <input
                                             type="text"
                                             value={building.address}
                                             onChange={(e) => handleNestedChange(index, 'address', e.target.value)}
                                             placeholder="Building Address"
                                         />
-
-                                        <button type="button" onClick={() => removeBuilding(index)}>Remove Building</button>
+                                        {values.buildings.length > 1 && index != 0 &&
+                                            <button type="button" onClick={() => removeBuilding(index)}>Remove Building</button>
+                                        }
+                                        
                                     </div>
                                 ))}
                                 <button type="button" onClick={addBuilding}>Add Building</button>
@@ -465,7 +569,12 @@ export default function ClientQuote({ session }) {
                         }
                         {(activeCard == "bldg-layout") &&
                             <section>
-
+                                {/* <input
+                                    type="text"
+                                    value={building.layout}
+                                    onChange={(e) => handleNestedChange(index, 'layout', e.target.value)}
+                                    placeholder="Building Layout"
+                                /> */}
                             </section>
                         }
                         {(activeCard == "bldg-extensions") &&
