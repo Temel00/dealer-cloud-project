@@ -1,7 +1,9 @@
 .inputBody {
+    margin: 6em 0;
     display: flex;
     flex-flow: row nowrap;
-    width: 100%;
+    width: 100%;    
+    align-items: center;    
 }
 
 .sectionContainer {
@@ -9,6 +11,7 @@
     display: flex;
     align-items: flex-start;
     justify-content: center;
+    overflow: auto;
 }
 
 .sectionContainer section {
@@ -17,12 +20,17 @@
     border-radius: 1em;
 }
 
+.pageTitle {
+    font-size: 7vw;
+}
+
 .sidebar {
     display: flex;
     flex-flow: column nowrap;
     background-color: var(--background-white);
     border-radius: 0 1em 1em 0;
-    padding: 1em 0;
+    padding: 1em 0;    
+    
 }
 
 .sidebar button {
@@ -32,11 +40,71 @@
     border: none;
     cursor: pointer;
     border-radius: 0 1em 1em 0;
-    transition: background-color .5s ease;
+    transition: background-color .5s ease;    
 }
 
 .sidebar button:hover {
-    background: var(--light-blue);
+    background: var(--light-orange);
+}
+
+.carouselNav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    background-color: var(--background-white);
+    padding: 1em;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}
+
+.carouselContainer {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.carouselItem {
+    color: var(--dark-blue);
+    font-size: 1em;
+    font-weight: 600;
+    padding: 0.5em;
+    white-space: nowrap;
+    margin-bottom: 0.5em;
+}
+
+.dotContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: var(--light-orange);
+    margin: 0 4px;
+    transition: all 0.3s ease;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.activeDot {
+    width: 16px;
+    height: 16px;
+    background-color: var(--orange);
+}
+
+.navArrow {
+    color: var(--dark-blue);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5em;
 }
 
 .leftBox {
@@ -45,13 +113,51 @@
 }
 
 .rightBox {
+    font-size: 2vw;
     flex-grow: 1;
     flex-basis: 0;
     text-align: right;
+    overflow-wrap: break-word;
+}
+
+.inputContainer {
+    display: flex;
+    color: var(--dark-blue);
+    font-size: .75em;
+    font-weight: 600;
+    align-items: center;
+    gap: 1em;
+    justify-content: flex-end;
+}
+
+.inputContainer label {
+    white-space: nowrap;
 }
 
 .textInput {
     background: none;
+    padding: 0 0 0 1em;
     border: 1px solid var(--dark-blue);
-    line-height: 1.5em;
+    line-height: 2em;
+    border-radius: 5px;
+}
+
+.buildingContainer{
+    outline: 1px solid red;
+}
+
+@media screen and (min-width: 600px) {
+    .pageTitle {
+        font-size: 2em;
+    }
+
+    .rightBox {
+        font-size: .75em;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .inputBody {
+        flex-flow: column nowrap;
+    }
 }

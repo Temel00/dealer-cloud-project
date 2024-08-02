@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.0.4] - 2024-07-31
+
+###### Goal of change is to complete layout for Quote input with input boxes
+
+### Added
+  
+### Changed
+ 
+### Fixed
+
 ## [0.0.3] - 2024-07-28
 
 ###### Goal of change is to add additional protected routes and complete build of initial page structure that matches PBS Quote Generator
