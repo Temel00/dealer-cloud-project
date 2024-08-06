@@ -11,9 +11,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+- Added Building Project page functions (Activate/Add/Remove/Copy buildings)
+
+- Added Generic Delete and Copy building Dialogs to use to confirm user input
+
 ### Changed
 
+- Changed formatting on input fields
+
 ### Fixed
+
+- Fixed the id and names of inputs/labels to add building index
+
+- Fixed state object on add and remove building functions
 
 ## [0.0.4] - 2024-07-31
 

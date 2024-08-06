@@ -37,10 +37,12 @@ export const initialState = {
   seismicSm1: '',
   buildings: [
     {
-      name: '',
-      address: '',
-      layout: '',
-      // ... other building-specific fields
+      width: '',
+      length: '',
+      offsetX: '',
+      offsetY: '',
+      rotation: '',
+      commonWall: '',
     }
   ]
 };

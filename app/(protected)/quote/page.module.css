@@ -2,8 +2,8 @@
     margin: 6em 0;
     display: flex;
     flex-flow: row nowrap;
-    width: 100%;    
-    align-items: center;    
+    width: 100%;
+    align-items: center;
 }
 
 .sectionContainer {
@@ -29,8 +29,8 @@
     flex-flow: column nowrap;
     background-color: var(--background-white);
     border-radius: 0 1em 1em 0;
-    padding: 1em 0;    
-    
+    padding: 1em 0;
+
 }
 
 .sidebar button {
@@ -40,7 +40,7 @@
     border: none;
     cursor: pointer;
     border-radius: 0 1em 1em 0;
-    transition: background-color .5s ease;    
+    transition: background-color .5s ease;
 }
 
 .sidebar button:hover {
@@ -142,8 +142,106 @@
     border-radius: 5px;
 }
 
-.buildingContainer{
-    outline: 1px solid red;
+.buildingContainer {
+    display: flex;
+    flex-flow: column nowrap;
+    padding: .5em;
+    gap: .25em;
+    background-color: var(--dark-blue);
+    border-radius: 10px;
+}
+
+.buildingContainer input {
+    padding: 0 0 0 1em;
+    line-height: 2em;
+    border-radius: 5px;
+    border: 1px solid var(--light-orange);
+}
+
+.buildingContainer input:focus {
+    outline: 2px solid var(--orange);
+}
+
+.buildingTitleContainer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.buildingProjectContainer {
+    display: flex;
+    color: var(--background-white);
+    font-size: .75em;
+    font-weight: 600;
+    align-items: center;
+    gap: 1em;
+    justify-content: flex-end;
+}
+
+.buildingProjectContainer label {
+    white-space: nowrap;
+}
+
+.buildingProjectContainer input[type=number] {
+    color: black;
+}
+
+
+.projectPage {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 1.5em;
+}
+
+.copyBuilding {
+    font-size: 1em;
+    padding: .5em;
+    border: none;
+    border-radius: 5px;
+    color: var(--background-white);
+    align-self: center;
+    background-color: var(--light-blue);
+}
+
+.addBuilding {
+    color: var(--background-white);
+    background-color: var(--dark-blue);
+    border: none;
+    border-radius: 50%;
+    width: 2em;
+    height: 2em;
+    font-size: 1.25em;
+    align-self: center;
+}
+
+.buttonContainer {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+}
+
+.removeBuilding {
+    font-size: 1em;
+    padding: .5em;
+    border: none;
+    border-radius: 5px;
+    color: var(--background-white);
+    align-self: flex-end;
+    background: var(--red);
+}
+
+.activeBuilding {
+    font-size: 1em;
+    padding: .5em;
+    border: none;
+    border-radius: 5px;
+    color: var(--background-white);
+    align-self: flex-end;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.activeBuildingSelected {
+    background-color: var(--light-green);
+    color: white;
 }
 
 @media screen and (min-width: 600px) {
