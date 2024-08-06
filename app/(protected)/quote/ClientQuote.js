@@ -340,8 +340,7 @@ export default function ClientQuote({ session }) {
                                         onChange={handleChange}
                                         placeholder="Building Use"
                                     />
-                                </div>                               
-                                <button onClick={() => console.log(values)}>TEST STATE</button>
+                                </div>                                                               
                             </section>
                         }
                         {/* Design Code Page */}
@@ -545,7 +544,13 @@ export default function ClientQuote({ session }) {
                             <section>
                                 {/* Buildings section */}
                                 {values.buildings.map((building, index) => (
-                                    <div key={index} className={styles.buildingContainer}>                                        
+                                    <div key={index} className={styles.buildingContainer}>     
+                                        <input
+                                            type="text"
+                                            value={building.name}
+                                                onChange={(e) => handleNestedChange(index, 'name', e.target.value)}
+                                            placeholder="Building Name"
+                                        />                                      
                                         <input
                                             type="text"
                                             value={building.name}
@@ -609,7 +614,7 @@ export default function ClientQuote({ session }) {
                         }
                         {(activeCard == "finalize-quote") &&
                             <section>
-                                <button type="submit">Submit Quote</button>
+                                <button type="submit">Submit Quote</button>                                
                             </section>
                         }
                     </form>
