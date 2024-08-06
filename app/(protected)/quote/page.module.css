@@ -165,6 +165,7 @@
 .buildingTitleContainer {
     display: flex;
     justify-content: space-between;
+    color: var(--background-white);
 }
 
 .buildingProjectContainer {

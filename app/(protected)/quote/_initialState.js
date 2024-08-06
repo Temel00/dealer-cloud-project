@@ -35,6 +35,8 @@ export const initialState = {
   seismicS1: '',
   seismicSms: '',
   seismicSm1: '',
+  // Building Project Page  
+  steelFinish: '',
   buildings: [
     {
       width: '',
@@ -44,5 +46,8 @@ export const initialState = {
       rotation: '',
       commonWall: '',
     }
-  ]
+  ],
+  // BUilding # - Layout
+  buildingShape: '',
+  backPeakOffset: '',
 };
