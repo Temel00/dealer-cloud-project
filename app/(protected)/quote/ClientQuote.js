@@ -28,12 +28,12 @@ export default function ClientQuote({ session }) {
         { id: 'quote-info', label: 'Project Information' },
         { id: 'design-code', label: 'Design Codes' },
         { id: 'building-project', label: 'Building Project' },
-        { id: 'bldg-layout', label: 'Main Bldg - Layout' },
-        { id: 'bldg-extensions', label: 'Main Bldg - Extensions' },
-        { id: 'bldg-partitions', label: 'Main Bldg - Partitions' },
-        { id: 'bldg-options', label: 'Main Bldg - Options' },
-        { id: 'bldg-cranes', label: 'Main Bldg - Cranes' },
-        { id: 'bldg-openings', label: 'Main Bldg - Openings' },
+        { id: 'bldg-layout', label: 'Building ' + (activeBuilding + 1) + ' - Layout' },
+        { id: 'bldg-extensions', label: 'Building ' + (activeBuilding + 1) + ' - Extensions' },
+        { id: 'bldg-partitions', label: 'Building ' + (activeBuilding + 1) + ' - Partitions' },
+        { id: 'bldg-options', label: 'Building ' + (activeBuilding + 1) + ' - Options' },
+        { id: 'bldg-cranes', label: 'Building ' + (activeBuilding + 1) + ' - Cranes' },
+        { id: 'bldg-openings', label: 'Building ' + (activeBuilding + 1) + ' - Openings' },
         { id: 'accessories', label: 'Accessories' },
         { id: 'finalize-quote', label: 'Finalize Quote' },
     ];
@@ -218,12 +218,12 @@ export default function ClientQuote({ session }) {
                         <button onClick={() => setActiveCard('quote-info')}>Project Information</button>
                         <button onClick={() => setActiveCard('design-code')}>Design Codes</button>
                         <button onClick={() => setActiveCard('building-project')}>Building Project</button>
-                        <button onClick={() => setActiveCard('bldg-layout')}>Main Bldg - Layout</button>
-                        <button onClick={() => setActiveCard('bldg-extensions')}>Main Bldg - Extensions</button>
-                        <button onClick={() => setActiveCard('bldg-partitions')}>Main Bldg - Partitions</button>
-                        <button onClick={() => setActiveCard('bldg-options')}>Main Bldg - Options</button>
-                        <button onClick={() => setActiveCard('bldg-cranes')}>Main Bldg - Cranes</button>
-                        <button onClick={() => setActiveCard('bldg-openings')}>Main Bldg - Openings</button>
+                        <button onClick={() => setActiveCard('bldg-layout')}>Building {activeBuilding + 1} - Layout</button>
+                        <button onClick={() => setActiveCard('bldg-extensions')}>Building {activeBuilding + 1} - Extensions</button>
+                        <button onClick={() => setActiveCard('bldg-partitions')}>Building {activeBuilding + 1} - Partitions</button>
+                        <button onClick={() => setActiveCard('bldg-options')}>Building {activeBuilding + 1} - Options</button>
+                        <button onClick={() => setActiveCard('bldg-cranes')}>Building {activeBuilding + 1} - Cranes</button>
+                        <button onClick={() => setActiveCard('bldg-openings')}>Building {activeBuilding + 1} - Openings</button>
                         <button onClick={() => setActiveCard('accessories')}>Accessories</button>
                         <button onClick={() => setActiveCard('finalize-quote')}>Finalize Quote</button>
                     </nav>
@@ -648,6 +648,7 @@ export default function ClientQuote({ session }) {
                                 </div>
                             </section>
                         }
+                        {/* Building Project Page */}
                         {(activeCard == "building-project") &&
                             <section className={styles.projectPage}>
                                 {/* Buildings section */}
@@ -658,51 +659,51 @@ export default function ClientQuote({ session }) {
                                             <button className={styles.copyBuilding} type="button" onClick={() => openCopyDialog(index)}><FontAwesomeIcon icon={faCopy} /></button>
                                         </div>
                                         <div className={styles.buildingProjectContainer}>
-                                            <label htmlFor='buildingWidth-${index}' >Width:</label>
+                                            <label htmlFor={`buildingWidth-${index}`}>Width:</label>
                                             <input
                                                 type="text"
-                                                id='buildingWidth-${index}'
-                                                name='buildingWidth-${index}'
+                                                id={`buildingWidth-${index}`}
+                                                name={`buildingWidth-${index}`}
                                                 value={building.width}
                                                 onChange={(e) => handleFeetInchesChange(index, 'width', e.target.value)}
                                                 placeholder="Feet"
                                             />
                                         </div>
                                         <div className={styles.buildingProjectContainer}>
-                                            <label htmlFor='buildingLength-${index}' >Length:</label>
+                                            <label htmlFor={`buildingLength-${index}`}>Length:</label>
                                             <input
                                                 type="text"
-                                                id='buildingLength-${index}'
-                                                name='buildingLength-${index}'
+                                                id={`buildingLength-${index}`}
+                                                name={`buildingLength-${index}`}
                                                 value={building.length}
                                                 onChange={(e) => handleFeetInchesChange(index, 'length', e.target.value)}
                                                 placeholder="Feet"
                                             />
                                         </div>
                                         <div className={styles.buildingProjectContainer}>
-                                            <label htmlFor='buildingOffsetX-${index}' >Left/Right:</label>
+                                            <label htmlFor={`buildingOffsetX-${index}`}>Left/Right:</label>
                                             <input
                                                 type="text"
-                                                id='buildingOffsetX-${index}'
-                                                name='buildingOffsetX-${index}'
+                                                id={`buildingOffsetX-${index}`}
+                                                name={`buildingOffsetX-${index}`}
                                                 value={building.offsetX}
                                                 onChange={(e) => handleFeetInchesChange(index, 'offsetX', e.target.value)}
                                                 placeholder="Feet From Left"
                                             />
                                         </div>
                                         <div className={styles.buildingProjectContainer}>
-                                            <label htmlFor='buildingOffsetY-${index}' >Back/Front:</label>
+                                            <label htmlFor={`buildingOffsetY-${index}`}>Back/Front:</label>
                                             <input
                                                 type="text"
-                                                id='buildingOffsetY-${index}'
-                                                name='buildingOffsetY-${index}'
+                                                id={`buildingOffsetY-${index}`}
+                                                name={`buildingOffsetY-${index}`}
                                                 value={building.offsetY}
                                                 onChange={(e) => handleFeetInchesChange(index, 'offsetY', e.target.value)}
                                                 placeholder="Feet From Back"
                                             />
                                         </div>
                                         <div className={styles.buildingProjectContainer}>
-                                            <label htmlFor='buildingRotation-${index}' >Rotation:</label>
+                                            <label htmlFor={`buildingRotation-${index}`}>Rotation:</label>
                                             <input
                                                 type="number"
                                                 id={`buildingRotation-${index}`}
@@ -715,7 +716,7 @@ export default function ClientQuote({ session }) {
                                             />
                                         </div>
                                         <div className={styles.buildingProjectContainer}>
-                                            <label htmlFor='buildingCommonWall-${index}' >Common Wall:</label>
+                                            <label htmlFor={`buildingCommonWall-${index}`}>Common Wall:</label>
                                             <select
                                                 id={`buildingCommonWall-${index}`}
                                                 name={`buildingCommonWall-${index}`}
@@ -758,14 +759,22 @@ export default function ClientQuote({ session }) {
                                 <button className={styles.addBuilding} type="button" onClick={addBuilding}><FontAwesomeIcon icon={faPlus} /></button>
                             </section>
                         }
-                        {(activeCard == "bldg-layout") &&
+                        {/* Building Layout Page */}
+                        {(activeCard == "bldg-layout") && activeBuilding != null &&
                             <section>
-                                {/* <input
-                                    type="text"
-                                    value={building.layout}
-                                    onChange={(e) => handleNestedChange(index, 'layout', e.target.value)}
-                                    placeholder="Building Layout"
-                                /> */}
+                                <h2>Building {activeBuilding + 1} - Layout</h2>
+                                <div className={styles.buildingProjectContainer}>
+                                    <label htmlFor={`buildingWidth-${activeBuilding}`}>Front Sidewall:</label>
+                                    <input
+                                        type="text"
+                                        id={`buildingWidth-${activeBuilding}`}
+                                        name={`buildingWidth-${activeBuilding}`}
+                                        value={values.buildings[activeBuilding].fswBays}
+                                        onChange={(e) => handleNestedChange(activeBuilding, 'fswBays', e.target.value)}
+                                        placeholder="Separate Bays with Space"
+                                    />
+                                </div>
+
                             </section>
                         }
                         {(activeCard == "bldg-extensions") &&
@@ -845,6 +854,6 @@ export default function ClientQuote({ session }) {
                 title="Confirm Deletion"
                 message={`Are you sure you want to delete Building ${buildingToDelete !== null ? buildingToDelete + 1 : ''}?`}
             />
-        </main>
+        </main >
     )
 }

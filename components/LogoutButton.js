@@ -15,7 +15,7 @@ export default function LogoutButton() {
 
     return (
         <div className={styles.leftBox}>
-            <button onClick={handleLogout}><FontAwesomeIcon icon={faDoorOpen} size="2x" /></button>
+            <button onClick={handleLogout}><FontAwesomeIcon icon={faDoorOpen} /></button>
         </div>
     )
 }

@@ -6,6 +6,7 @@ import { redirect } from 'next/navigation'
 import CsvWriter from '../../../components/CsvWriter';
 import styles from './page.module.css'
 import newQuote from '../../../public/images/newQuote.png'
+import logo from '../../../public/images/pbslogo.png'
 import openFolder from '../../../public/images/openFolder.png'
 import builderTrend from '../../../public/images/BuilderTrend.png'
 import pbsWebsite from '../../../public/images/pbsWebsite.png'
@@ -21,12 +22,28 @@ export default async function Dashboard() {
         redirect('/login')
     }
 
+    const hasPermission = (requiredLevel) => {
+        return session.user.permission >= requiredLevel
+    }
+
     return (
         <main>
             <header>
-                <LogoutButton className={styles.leftBox}/>                
+                <LogoutButton className={styles.leftBox} />
                 <h1>Dashboard</h1>
-                <p className={styles.rightBox}>Welcome, {session.user.email}</p>
+                <div className={styles.rightBox}>
+                    <div className={styles.innerBox}>
+                        <div className={styles.avatarBox}>
+                            <Image
+                                alt="PBS Buildings Logo"
+                                src={logo}
+                                className={styles.avatar}
+                            />
+                        </div>
+                        <p >{session.user.email}</p>
+                    </div>
+                </div>
+
             </header>
             <div className='card'>
                 {/* <CsvWriter /> */}
@@ -47,6 +64,9 @@ export default async function Dashboard() {
                             className={styles.dashImage}
                         />
                     </Link>
+                    {hasPermission(5) &&
+                        <Link href="/register" className="button">Register</Link>
+                    }
                 </nav>
             </div>
         </main>

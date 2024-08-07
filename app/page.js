@@ -16,7 +16,6 @@ export default function Home() {
                 <h1 className="title">Welcome to the PBS Dealer Application</h1>
                 <div className="buttonContainer">
                     <Link href="/login" className="button">Login</Link>
-                    <Link href="/register" className="button">Register</Link>
                 </div>
             </section>
             <p className={styles.version}>version: {APP_VERSION}</p>

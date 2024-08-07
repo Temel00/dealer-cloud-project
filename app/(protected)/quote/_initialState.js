@@ -45,6 +45,8 @@ export const initialState = {
       offsetY: '',
       rotation: '',
       commonWall: '',
+      // Building - Layout
+      fswBays: '',
     }
   ],
   // BUilding # - Layout

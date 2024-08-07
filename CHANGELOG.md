@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [0.0.5] - 2024-08-02
 
-###### Goal of change is to layout input boxes and structure of state object to save Quote information
+###### Goal of change is to layout input boxes and structure of state object to save Quote information as well as build out authorization structure
 
 ### Added
 
@@ -15,15 +15,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Added Generic Delete and Copy building Dialogs to use to confirm user input
 
+- Added Active Building and Dynamic switching of building pages
+
 ### Changed
 
 - Changed formatting on input fields
+
+- Changed authorization to be based on permissions level
 
 ### Fixed
 
 - Fixed the id and names of inputs/labels to add building index
 
 - Fixed state object on add and remove building functions
+
+- Fixed registration to be protected behind admin permissions
 
 ## [0.0.4] - 2024-07-31
 
