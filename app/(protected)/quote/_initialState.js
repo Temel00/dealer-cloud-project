@@ -35,12 +35,21 @@ export const initialState = {
   seismicS1: '',
   seismicSms: '',
   seismicSm1: '',
+  // Building Project Page  
+  steelFinish: '',
   buildings: [
     {
-      name: '',
-      address: '',
-      layout: '',
-      // ... other building-specific fields
+      width: '',
+      length: '',
+      offsetX: '',
+      offsetY: '',
+      rotation: '',
+      commonWall: '',
+      // Building - Layout
+      fswBays: '',
     }
-  ]
+  ],
+  // BUilding # - Layout
+  buildingShape: '',
+  backPeakOffset: '',
 };

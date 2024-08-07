@@ -4,9 +4,11 @@ import Link from 'next/link'
 import Image from 'next/image'
 import styles from './page.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHouse, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons'
+import { faHouse, faChevronLeft, faChevronRight, faTrash, faCopy, faPlus, faCheck } from '@fortawesome/free-solid-svg-icons'
 import useFormState from '../../../hooks/useFormState';
 import { initialState } from './_initialState';
+import CopyBuildingDialog from '../../../components/CopyBuildingDialog';
+import DeleteDialog from '../../../components/DeleteDialog';
 
 
 export default function ClientQuote({ session }) {
@@ -14,17 +16,24 @@ export default function ClientQuote({ session }) {
     const [activeCard, setActiveCard] = useState('quote-info');
     const [isDesktop, setDesktop] = useState(false);
     const [activeBuilding, setActiveBuilding] = useState(0);
-    const [currentIndex, setCurrentIndex] = useState(0);
+    const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+    const [buildingToDelete, setBuildingToDelete] = useState(null);
+
+    const [dialogOpen, setDialogOpen] = useState(false);
+    const [sourceBuildingIndex, setSourceBuildingIndex] = useState(0);
+
+    // Adjust index to change initial starting page, helpful to work on page on save
+    const [currentIndex, setCurrentIndex] = useState(2);
     const navItems = [
         { id: 'quote-info', label: 'Project Information' },
         { id: 'design-code', label: 'Design Codes' },
         { id: 'building-project', label: 'Building Project' },
-        { id: 'bldg-layout', label: 'Main Bldg - Layout' },
-        { id: 'bldg-extensions', label: 'Main Bldg - Extensions' },
-        { id: 'bldg-partitions', label: 'Main Bldg - Partitions' },
-        { id: 'bldg-options', label: 'Main Bldg - Options' },
-        { id: 'bldg-cranes', label: 'Main Bldg - Cranes' },
-        { id: 'bldg-openings', label: 'Main Bldg - Openings' },
+        { id: 'bldg-layout', label: 'Building ' + (activeBuilding + 1) + ' - Layout' },
+        { id: 'bldg-extensions', label: 'Building ' + (activeBuilding + 1) + ' - Extensions' },
+        { id: 'bldg-partitions', label: 'Building ' + (activeBuilding + 1) + ' - Partitions' },
+        { id: 'bldg-options', label: 'Building ' + (activeBuilding + 1) + ' - Options' },
+        { id: 'bldg-cranes', label: 'Building ' + (activeBuilding + 1) + ' - Cranes' },
+        { id: 'bldg-openings', label: 'Building ' + (activeBuilding + 1) + ' - Openings' },
         { id: 'accessories', label: 'Accessories' },
         { id: 'finalize-quote', label: 'Finalize Quote' },
     ];
@@ -51,19 +60,116 @@ export default function ClientQuote({ session }) {
         setActiveCard(navItems[index].id);
     };
 
-    // Add/Remove Buildings
+    // Activate/Add/Remove Buildings
+    const setActiveBuildingHandler = (index) => {
+        console.log('index');
+        setActiveBuilding(index);
+    };
+
     const addBuilding = () => {
         setValues(prev => ({
             ...prev,
-            buildings: [...prev.buildings, { name: '', address: '' /* other fields */ }]
+            buildings: [
+                ...prev.buildings,
+                {
+                    width: '',
+                    length: '',
+                    offsetX: '',
+                    offsetY: '',
+                    rotation: '',
+                    commonWall: '',
+                }
+            ]
         }));
     };
 
-    const removeBuilding = (index) => {
+    const removeBuilding = (indexToRemove) => {
         setValues(prev => ({
             ...prev,
-            buildings: prev.buildings.filter((_, i) => i !== index)
+            buildings: prev.buildings.filter((_, index) => index !== indexToRemove)
         }));
+
+        // If the removed building was active, set the first building as active
+        if (indexToRemove === activeBuilding) {
+            setActiveBuilding(0);
+        } else if (indexToRemove < activeBuilding) {
+            // If a building before the active one is removed, adjust the active index
+            setActiveBuilding(prev => prev - 1);
+        }
+    };
+
+    const openCopyDialog = (index) => {
+        setSourceBuildingIndex(index);
+        setDialogOpen(true);
+    };
+
+    const closeCopyDialog = () => {
+        setDialogOpen(false);
+        setSourceBuildingIndex(null);
+    };
+
+    const copyBuilding = (targetIndex) => {
+        if (sourceBuildingIndex === null) {
+            closeCopyDialog();
+            return;
+        }
+
+        setValues(prev => {
+            const newBuildings = [...prev.buildings];
+            const sourceBuilding = newBuildings[sourceBuildingIndex];
+            const buildingToCopy = {
+                width: sourceBuilding.width,
+                length: sourceBuilding.length,
+                offsetX: sourceBuilding.offsetX,
+                offsetY: sourceBuilding.offsetY,
+                rotation: sourceBuilding.rotation,
+                commonWall: sourceBuilding.commonWall,
+            };
+
+            if (targetIndex === 'new') {
+                newBuildings.push(buildingToCopy);
+            } else {
+                newBuildings[targetIndex] = {
+                    ...newBuildings[targetIndex],
+                    ...buildingToCopy
+                };
+            }
+
+            return { ...prev, buildings: newBuildings };
+        });
+
+        closeCopyDialog();
+    };
+
+    const openDeleteDialog = (index) => {
+        setBuildingToDelete(index);
+        setIsDeleteDialogOpen(true);
+    };
+
+    const closeDeleteDialog = () => {
+        setIsDeleteDialogOpen(false);
+        setBuildingToDelete(null);
+    };
+
+    const confirmRemoveBuilding = () => {
+        if (buildingToDelete !== null) {
+            removeBuilding(buildingToDelete);
+            closeDeleteDialog();
+        }
+    };
+
+    const handleFeetInchesChange = (index, field, value) => {
+        const feetInchesRegex = /^(\d+)'?\s*(\d*)"?$/;
+        if (feetInchesRegex.test(value) || value === '') {
+            handleNestedChange(index, field, value);
+        }
+    };
+
+    const handleRotationChange = (index, value) => {
+        const numValue = parseInt(value, 10);
+        if (numValue >= 0 && numValue <= 360 && numValue % 15 === 0) {
+            handleNestedChange(index, 'rotation', numValue.toString());
+        }
     };
 
     const handleSubmit = (e) => {
@@ -72,6 +178,8 @@ export default function ClientQuote({ session }) {
         // Here you would typically send the data to your backend
     };
 
+
+    // Checking for screen width to conditionally render DOM elements
     useEffect(() => {
         setActiveCard(navItems[currentIndex].id);
         if (window.innerWidth > 1000) {
@@ -110,12 +218,12 @@ export default function ClientQuote({ session }) {
                         <button onClick={() => setActiveCard('quote-info')}>Project Information</button>
                         <button onClick={() => setActiveCard('design-code')}>Design Codes</button>
                         <button onClick={() => setActiveCard('building-project')}>Building Project</button>
-                        <button onClick={() => setActiveCard('bldg-layout')}>Main Bldg - Layout</button>
-                        <button onClick={() => setActiveCard('bldg-extensions')}>Main Bldg - Extensions</button>
-                        <button onClick={() => setActiveCard('bldg-partitions')}>Main Bldg - Partitions</button>
-                        <button onClick={() => setActiveCard('bldg-options')}>Main Bldg - Options</button>
-                        <button onClick={() => setActiveCard('bldg-cranes')}>Main Bldg - Cranes</button>
-                        <button onClick={() => setActiveCard('bldg-openings')}>Main Bldg - Openings</button>
+                        <button onClick={() => setActiveCard('bldg-layout')}>Building {activeBuilding + 1} - Layout</button>
+                        <button onClick={() => setActiveCard('bldg-extensions')}>Building {activeBuilding + 1} - Extensions</button>
+                        <button onClick={() => setActiveCard('bldg-partitions')}>Building {activeBuilding + 1} - Partitions</button>
+                        <button onClick={() => setActiveCard('bldg-options')}>Building {activeBuilding + 1} - Options</button>
+                        <button onClick={() => setActiveCard('bldg-cranes')}>Building {activeBuilding + 1} - Cranes</button>
+                        <button onClick={() => setActiveCard('bldg-openings')}>Building {activeBuilding + 1} - Openings</button>
                         <button onClick={() => setActiveCard('accessories')}>Accessories</button>
                         <button onClick={() => setActiveCard('finalize-quote')}>Finalize Quote</button>
                     </nav>
@@ -340,8 +448,7 @@ export default function ClientQuote({ session }) {
                                         onChange={handleChange}
                                         placeholder="Building Use"
                                     />
-                                </div>                               
-                                <button onClick={() => console.log(values)}>TEST STATE</button>
+                                </div>
                             </section>
                         }
                         {/* Design Code Page */}
@@ -358,7 +465,7 @@ export default function ClientQuote({ session }) {
                                         onChange={handleChange}
                                         placeholder="Building Code"
                                     />
-                                </div> 
+                                </div>
                                 <div className={styles.inputContainer}>
                                     <label htmlFor='riskCategory' >Risk Category:</label>
                                     <input
@@ -370,7 +477,7 @@ export default function ClientQuote({ session }) {
                                         onChange={handleChange}
                                         placeholder="Risk Category"
                                     />
-                                </div> 
+                                </div>
                                 <div className={styles.inputContainer}>
                                     <label htmlFor='collateralLoad' >Collateral Load:</label>
                                     <input
@@ -382,7 +489,7 @@ export default function ClientQuote({ session }) {
                                         onChange={handleChange}
                                         placeholder="Collateral Load"
                                     />
-                                </div> 
+                                </div>
                                 <div className={styles.inputContainer}>
                                     <label htmlFor='liveLoad' >Live Load:</label>
                                     <input
@@ -394,7 +501,7 @@ export default function ClientQuote({ session }) {
                                         onChange={handleChange}
                                         placeholder="Live Load"
                                     />
-                                </div> 
+                                </div>
                                 <div className={styles.inputContainer}>
                                     <label htmlFor='deadLoad' >Dead Load:</label>
                                     <input
@@ -406,7 +513,7 @@ export default function ClientQuote({ session }) {
                                         onChange={handleChange}
                                         placeholder="Dead Load"
                                     />
-                                </div> 
+                                </div>
                                 <div className={styles.inputContainer}>
                                     <label htmlFor='windLoad' >Wind Load:</label>
                                     <input
@@ -418,7 +525,7 @@ export default function ClientQuote({ session }) {
                                         onChange={handleChange}
                                         placeholder="Wind Load"
                                     />
-                                </div> 
+                                </div>
                                 <div className={styles.inputContainer}>
                                     <label htmlFor='exposure' >Exposure:</label>
                                     <input
@@ -430,7 +537,7 @@ export default function ClientQuote({ session }) {
                                         onChange={handleChange}
                                         placeholder="Exposure"
                                     />
-                                </div> 
+                                </div>
                                 <div className={styles.inputContainer}>
                                     <label htmlFor='enclosure' >Enclosure:</label>
                                     <input
@@ -442,7 +549,7 @@ export default function ClientQuote({ session }) {
                                         onChange={handleChange}
                                         placeholder="Enclosure"
                                     />
-                                </div> 
+                                </div>
                                 <div className={styles.inputContainer}>
                                     <label htmlFor='groundLoad' >Ground Load:</label>
                                     <input
@@ -454,7 +561,7 @@ export default function ClientQuote({ session }) {
                                         onChange={handleChange}
                                         placeholder="Ground Load"
                                     />
-                                </div> 
+                                </div>
                                 <div className={styles.inputContainer}>
                                     <label htmlFor='roofLoad' >Roof Load:</label>
                                     <input
@@ -466,7 +573,7 @@ export default function ClientQuote({ session }) {
                                         onChange={handleChange}
                                         placeholder="Roof Load"
                                     />
-                                </div> 
+                                </div>
                                 <div className={styles.inputContainer}>
                                     <label htmlFor='thermalFactor' >Thermal Factor:</label>
                                     <input
@@ -478,7 +585,7 @@ export default function ClientQuote({ session }) {
                                         onChange={handleChange}
                                         placeholder="Thermal Factor"
                                     />
-                                </div> 
+                                </div>
                                 <div className={styles.inputContainer}>
                                     <label htmlFor='seismicCategory' >Seismic Category:</label>
                                     <input
@@ -490,7 +597,7 @@ export default function ClientQuote({ session }) {
                                         onChange={handleChange}
                                         placeholder="Seismic Category"
                                     />
-                                </div> 
+                                </div>
                                 <div className={styles.inputContainer}>
                                     <label htmlFor='seismicSs' >SeismicSs:</label>
                                     <input
@@ -502,7 +609,7 @@ export default function ClientQuote({ session }) {
                                         onChange={handleChange}
                                         placeholder="SeismicSs"
                                     />
-                                </div> 
+                                </div>
                                 <div className={styles.inputContainer}>
                                     <label htmlFor='seismicS1' >SeismicS1:</label>
                                     <input
@@ -514,7 +621,7 @@ export default function ClientQuote({ session }) {
                                         onChange={handleChange}
                                         placeholder="SeismicS1"
                                     />
-                                </div> 
+                                </div>
                                 <div className={styles.inputContainer}>
                                     <label htmlFor='seismicSms' >SeismicSms:</label>
                                     <input
@@ -526,7 +633,7 @@ export default function ClientQuote({ session }) {
                                         onChange={handleChange}
                                         placeholder="SeismicSms"
                                     />
-                                </div> 
+                                </div>
                                 <div className={styles.inputContainer}>
                                     <label htmlFor='seismicSm1' >SeismicSm1:</label>
                                     <input
@@ -538,43 +645,136 @@ export default function ClientQuote({ session }) {
                                         onChange={handleChange}
                                         placeholder="SeismicSm1"
                                     />
-                                </div> 
+                                </div>
                             </section>
                         }
+                        {/* Building Project Page */}
                         {(activeCard == "building-project") &&
-                            <section>
+                            <section className={styles.projectPage}>
                                 {/* Buildings section */}
                                 {values.buildings.map((building, index) => (
-                                    <div key={index} className={styles.buildingContainer}>                                        
-                                        <input
-                                            type="text"
-                                            value={building.name}
-                                            onChange={(e) => handleNestedChange(index, 'name', e.target.value)}
-                                            placeholder="Building Name"
-                                        />                                        
-                                        <input
-                                            type="text"
-                                            value={building.address}
-                                            onChange={(e) => handleNestedChange(index, 'address', e.target.value)}
-                                            placeholder="Building Address"
-                                        />
-                                        {values.buildings.length > 1 && index != 0 &&
-                                            <button type="button" onClick={() => removeBuilding(index)}>Remove Building</button>
-                                        }
-                                        
+                                    <div key={index} className={styles.buildingContainer}>
+                                        <div className={styles.buildingTitleContainer}>
+                                            <h3>Building {index + 1}</h3>
+                                            <button className={styles.copyBuilding} type="button" onClick={() => openCopyDialog(index)}><FontAwesomeIcon icon={faCopy} /></button>
+                                        </div>
+                                        <div className={styles.buildingProjectContainer}>
+                                            <label htmlFor={`buildingWidth-${index}`}>Width:</label>
+                                            <input
+                                                type="text"
+                                                id={`buildingWidth-${index}`}
+                                                name={`buildingWidth-${index}`}
+                                                value={building.width}
+                                                onChange={(e) => handleFeetInchesChange(index, 'width', e.target.value)}
+                                                placeholder="Feet"
+                                            />
+                                        </div>
+                                        <div className={styles.buildingProjectContainer}>
+                                            <label htmlFor={`buildingLength-${index}`}>Length:</label>
+                                            <input
+                                                type="text"
+                                                id={`buildingLength-${index}`}
+                                                name={`buildingLength-${index}`}
+                                                value={building.length}
+                                                onChange={(e) => handleFeetInchesChange(index, 'length', e.target.value)}
+                                                placeholder="Feet"
+                                            />
+                                        </div>
+                                        <div className={styles.buildingProjectContainer}>
+                                            <label htmlFor={`buildingOffsetX-${index}`}>Left/Right:</label>
+                                            <input
+                                                type="text"
+                                                id={`buildingOffsetX-${index}`}
+                                                name={`buildingOffsetX-${index}`}
+                                                value={building.offsetX}
+                                                onChange={(e) => handleFeetInchesChange(index, 'offsetX', e.target.value)}
+                                                placeholder="Feet From Left"
+                                            />
+                                        </div>
+                                        <div className={styles.buildingProjectContainer}>
+                                            <label htmlFor={`buildingOffsetY-${index}`}>Back/Front:</label>
+                                            <input
+                                                type="text"
+                                                id={`buildingOffsetY-${index}`}
+                                                name={`buildingOffsetY-${index}`}
+                                                value={building.offsetY}
+                                                onChange={(e) => handleFeetInchesChange(index, 'offsetY', e.target.value)}
+                                                placeholder="Feet From Back"
+                                            />
+                                        </div>
+                                        <div className={styles.buildingProjectContainer}>
+                                            <label htmlFor={`buildingRotation-${index}`}>Rotation:</label>
+                                            <input
+                                                type="number"
+                                                id={`buildingRotation-${index}`}
+                                                name={`buildingRotation-${index}`}
+                                                value={building.rotation}
+                                                onChange={(e) => handleRotationChange(index, e.target.value)}
+                                                min="0"
+                                                max="360"
+                                                step="15"
+                                            />
+                                        </div>
+                                        <div className={styles.buildingProjectContainer}>
+                                            <label htmlFor={`buildingCommonWall-${index}`}>Common Wall:</label>
+                                            <select
+                                                id={`buildingCommonWall-${index}`}
+                                                name={`buildingCommonWall-${index}`}
+                                                value={building.commonWall}
+                                                onChange={(e) => handleNestedChange(index, 'commonWall', e.target.value)}
+                                            >
+                                                <option value="">Select a building</option>
+                                                {values.buildings.map((_, buildingIndex) =>
+                                                    buildingIndex !== index && (
+                                                        <option key={buildingIndex} value={buildingIndex + 1}>
+                                                            Building {buildingIndex + 1}
+                                                        </option>
+                                                    )
+                                                )}
+                                            </select>
+                                        </div>
+                                        <div className={styles.buttonContainer}>
+                                            {/* Active Button */}
+                                            <button
+                                                className={`${styles.activeBuilding} ${activeBuilding === index ? styles.activeBuildingSelected : ''}`}
+                                                type="button"
+                                                onClick={() => setActiveBuildingHandler(index)}
+                                            >
+                                                <FontAwesomeIcon icon={faCheck} />
+                                            </button>
+
+                                            {/* Delete Button */}
+                                            {values.buildings.length > 1 && index !== 0 && (
+                                                <button
+                                                    className={styles.removeBuilding}
+                                                    type="button"
+                                                    onClick={() => openDeleteDialog(index)}
+                                                >
+                                                    <FontAwesomeIcon icon={faTrash} />
+                                                </button>
+                                            )}
+                                        </div>
                                     </div>
                                 ))}
-                                <button type="button" onClick={addBuilding}>Add Building</button>
+                                <button className={styles.addBuilding} type="button" onClick={addBuilding}><FontAwesomeIcon icon={faPlus} /></button>
                             </section>
                         }
-                        {(activeCard == "bldg-layout") &&
+                        {/* Building Layout Page */}
+                        {(activeCard == "bldg-layout") && activeBuilding != null &&
                             <section>
-                                {/* <input
-                                    type="text"
-                                    value={building.layout}
-                                    onChange={(e) => handleNestedChange(index, 'layout', e.target.value)}
-                                    placeholder="Building Layout"
-                                /> */}
+                                <h2>Building {activeBuilding + 1} - Layout</h2>
+                                <div className={styles.buildingProjectContainer}>
+                                    <label htmlFor={`buildingWidth-${activeBuilding}`}>Front Sidewall:</label>
+                                    <input
+                                        type="text"
+                                        id={`buildingWidth-${activeBuilding}`}
+                                        name={`buildingWidth-${activeBuilding}`}
+                                        value={values.buildings[activeBuilding].fswBays}
+                                        onChange={(e) => handleNestedChange(activeBuilding, 'fswBays', e.target.value)}
+                                        placeholder="Separate Bays with Space"
+                                    />
+                                </div>
+
                             </section>
                         }
                         {(activeCard == "bldg-extensions") &&
@@ -640,6 +840,20 @@ export default function ClientQuote({ session }) {
                     </nav>
                 )}
             </div>
-        </main>
+            <CopyBuildingDialog
+                isOpen={dialogOpen}
+                onClose={closeCopyDialog}
+                buildings={values.buildings}
+                onCopy={copyBuilding}
+                sourceBuildingIndex={sourceBuildingIndex}
+            />
+            <DeleteDialog
+                isOpen={isDeleteDialogOpen}
+                onClose={closeDeleteDialog}
+                onDelete={confirmRemoveBuilding}
+                title="Confirm Deletion"
+                message={`Are you sure you want to delete Building ${buildingToDelete !== null ? buildingToDelete + 1 : ''}?`}
+            />
+        </main >
     )
 }

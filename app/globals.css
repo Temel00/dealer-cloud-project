@@ -14,6 +14,9 @@
     --orange: #F94C08;
     --light-orange: #FBB99D;
     --background-white: #F5F5F5;
+    --red: #FB4B4B;
+    --light-green: #4CB852;
+    --green: #74FB78;
 }
 
 * {
@@ -33,6 +36,10 @@ body {
     background: linear-gradient(to bottom,
             transparent,
             rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
+}
+
+h2 {
+    color: var(--dark-blue);
 }
 
 a {
@@ -69,8 +76,9 @@ header {
     justify-content: center;
     align-items: center;
     padding: 4rem 2rem;
+    margin: 1em;
     border-radius: 1em;
-    min-width: 200px;
+    min-width: 10em;
     background-color: var(--background-white);
     color: var(--black);
 }
@@ -134,6 +142,69 @@ header {
     max-width: 280px;
     min-width: 200px;
     height: auto;
+}
+
+.dialog-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dialog-content {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    gap: .75em;
+    background-color: var(--background-white);
+    color: var(--black);
+    padding: 1em 3em 3em 3em;
+    border-radius: 10px;
+}
+
+.dialog-content ul {
+    display: flex;
+    gap: .75em;
+    list-style-type: none;
+}
+
+.dialog-title {
+    text-align: center;
+}
+
+.dialog-buttons {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+}
+
+.primary-button {
+    color: var(--background-white);
+    background-color: var(--dark-blue);
+    border: none;
+    border-radius: 5px;
+    padding: .75em;
+}
+
+.cancel {
+    color: var(--background-white);
+    background-color: rgba(0, 0, 0, 0.5);
+    border: none;
+    border-radius: 5px;
+    padding: .75em;
+}
+
+.delete {
+    color: var(--background-white);
+    background-color: var(--red);
+    border: none;
+    border-radius: 5px;
+    padding: .75em;
 }
 
 @media (prefers-color-scheme: dark) {

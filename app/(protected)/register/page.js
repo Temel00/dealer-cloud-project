@@ -26,7 +26,7 @@ export default function Register() {
             })
 
             if (response.ok) {
-                router.push('/login')
+                router.push('/dashboard')
             } else {
                 const data = await response.json()
                 setError(data.message || 'Something went wrong')
@@ -40,7 +40,7 @@ export default function Register() {
         <main>
             <div></div>
             <form className="card" onSubmit={handleSubmit}>
-                <Link href="/" className="backButton"><FontAwesomeIcon icon={faArrowLeft} size="1x" /></Link>
+                <Link href="/dashboard" className="backButton"><FontAwesomeIcon icon={faArrowLeft} size="1x" /></Link>
                 <Image
                     alt="PBS Buildings Logo"
                     src={logo}
